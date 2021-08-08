@@ -28,6 +28,30 @@ app.get('/todos', (req, res) => {
     })
 })
 
+app.get('/todos/:id', (req, res) => {
+    
+    const {id} = req.params
+    console.log(req.params);
+
+    res.json({
+        path: "todos",
+        id,
+    })
+})
+
+app.get('/todos/:id/:name', (req, res) => {
+    
+    const {id,name} = req.params
+
+    console.log(req.params);
+
+    res.json({
+        path: "todos",
+        id,
+        name,
+    })
+})
+
 // จากนั้นการยิงออกไปต้องระบุ port พร้อมกับ callback ว่าจะให้วิ่งไปที่ไหน (จริงๆจะใส่หรือไม่ก็ได้เป็น option)
 app.listen(3000, ()=> console.log('serve is running.'))
 

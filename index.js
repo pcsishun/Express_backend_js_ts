@@ -27,5 +27,22 @@ app.get('/todos', function (req, res) {
         path: "todos"
     });
 });
+app.get('/todos/:id', function (req, res) {
+    var id = req.params.id;
+    console.log(req.params);
+    res.json({
+        path: "todos",
+        id: id,
+    });
+});
+app.get('/todos/:id/:name', function (req, res) {
+    var _a = req.params, id = _a.id, name = _a.name;
+    console.log(req.params);
+    res.json({
+        path: "todos",
+        id: id,
+        name: name,
+    });
+});
 // จากนั้นการยิงออกไปต้องระบุ port พร้อมกับ callback ว่าจะให้วิ่งไปที่ไหน (จริงๆจะใส่หรือไม่ก็ได้เป็น option)
 app.listen(3000, function () { return console.log('serve is running.'); });
