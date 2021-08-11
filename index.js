@@ -27,5 +27,24 @@ app.get('/todos', function (req, res) {
         path: "todos"
     });
 });
+// เรียกใช้ parameter req 
+app.get('/todos/:id/:name', function (req, res) {
+    var _a = req.params, id = _a.id, name = _a.name;
+    console.log("this is todos page.", "witd id:", id, "name:", name);
+    res.json({
+        path: "todos",
+        id: id,
+        name: name,
+    });
+});
+// เรียกใช้ query parameter req 
+app.get('/queryparam', function (req, res) {
+    var query = req.query;
+    console.log("this is queryparam page.");
+    res.json({
+        message: "queryparam",
+        query: query,
+    });
+});
 // จากนั้นการยิงออกไปต้องระบุ port พร้อมกับ callback ว่าจะให้วิ่งไปที่ไหน (จริงๆจะใส่หรือไม่ก็ได้เป็น option)
 app.listen(3000, function () { return console.log('serve is running.'); });

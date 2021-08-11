@@ -9,6 +9,7 @@ const app = express() // ไว้สำหรับสร้าง  app backen
 
 app.get('/', (req, res) => {
     console.log('this is index page.') // จะถูกแสดงที่หน้า termial
+ 
     res.json({
         message: "Hello world"
     })
@@ -25,6 +26,32 @@ app.get('/todos', (req, res) => {
     console.log("this is todos page.")
     res.json({
         path: "todos"
+    })
+})
+
+// เรียกใช้ parameter req 
+app.get('/todos/:id/:name', (req, res) => {
+    const {id, name} = req.params
+    console.log("this is todos page.", "witd id:", id, "name:", name)
+    res.json({
+        path: "todos",
+        id,
+        name,
+    })
+})
+
+// เรียกใช้ query parameter req 
+// ลอง test 
+// http://localhost:3000/queryparam/?test=somthing 
+// http://localhost:3000/queryparam/?test=somthing&contant=Hi
+// http://localhost:3000/queryparam/?test=somthing&contant=Hi&contant=Earth
+
+app.get('/queryparam', (req, res) => {
+    const {query} = req
+    console.log("this is queryparam page.")
+    res.json({
+        message: "queryparam",
+        query,
     })
 })
 
