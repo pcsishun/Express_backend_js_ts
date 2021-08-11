@@ -1,7 +1,11 @@
 // const express = require('express');
 import express from 'express';
+import bodyParser from  'body-parser';
 
 const app = express() // ไว้สำหรับสร้าง  app backend เป็น object
+app.use(bodyParser.json()) // เพิ่ม pugin ให้ body อยู่ในรูปแบบของ json 
+
+
 
 // การเขียน path จำเป็นต้องมีองค์ประกอบอยู่ 2 อย่าง ณ บริเวณ callback คือ req res ต้องเรียงตามรายละเอียดตามนี้
 // res ต้องดึง หรือเก็บเป็น json 
@@ -47,11 +51,12 @@ app.get('/todos/:id/:name', (req, res) => {
 // http://localhost:3000/queryparam/?test=somthing&contant=Hi&contant=Earth
 
 app.get('/queryparam', (req, res) => {
-    const {query} = req
+    const {query, body} = req // req จะประกอบได้ด้วย req.query เเละ req.body (มาจากการ import bodyParser)
     console.log("this is queryparam page.")
     res.json({
         message: "queryparam",
         query,
+        body,
     })
 })
 
