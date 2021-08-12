@@ -75,14 +75,42 @@ app.delete('/todos/:id', (req,res)=>{
     const Todos: Todo[] = db.Todos
 
     const {id} = req.params
-    const newTodos = Todos.filter(todo => todo.id !== Number(id))
-    fs.writeFileSync('db.json', JSON.stringify(newTodos))
+    
     if (!Todos){
         res.json({message: `this id not found ${id} 404`})
+    }else{
+        const newTodos = Todos.filter(todo => todo.id !== Number(id))
+        fs.writeFileSync('db.json', JSON.stringify(newTodos))
+        res.json({message: `id alreadly delete ${id}`})
+    }
+})
+
+app.put('/todos/:id',(req, res)=>{
+    
+    const {id} = req.params;
+    const {title} = req.body;
+
+    const file = fs.readFileSync('db.json','utf-8');
+    const db = JSON.parse(file);
+    // console.log(db['Todos'].length);
+    // console.log(db['Todos'][0].title);
+    console.log("id:", id)
+    console.log("file:", db['Todos'][0].id);
+    
+    for(let i = 0; i < db['Todos'].length; i++){
+        console.log(db['Todos'][i]);
+        if(db['Todos'][i].id === Number(id)){
+            console.log("Now it in if");
+            db['Todos'][i].title = title;
+            fs.writeFileSync('db.json', JSON.stringify(db))
+            res.json({message: "Success update."});
+            break
+        }else{
+            res.json({message: "Not found this id. 404"});
+        }
     }
 
-    res.json({message: `id alreadly delete ${id}`})
-    
+
 })
 
 
@@ -117,5 +145,5 @@ app.get('/queryparam', (req, res) => {
 
 
 // จากนั้นการยิงออกไปต้องระบุ port พร้อมกับ callback ว่าจะให้วิ่งไปที่ไหน (จริงๆจะใส่หรือไม่ก็ได้เป็น option)
-app.listen(3000, ()=> console.log('serve is running.'))
+app.listen(8000, ()=> console.log('serve is running.'))
 
