@@ -72,19 +72,18 @@ app.delete('/todos/:id', function (req, res) {
         res.json({ message: "id alreadly delete " + id });
     }
 });
+// update methods 
 app.put('/todos/:id', function (req, res) {
     var id = req.params.id;
     var title = req.body.title;
     var file = fs_1.default.readFileSync('db.json', 'utf-8');
     var db = JSON.parse(file);
-    // console.log(db['Todos'].length);
-    // console.log(db['Todos'][0].title);
-    console.log("id:", id);
-    console.log("file:", db['Todos'][0].id);
+    // console.log("id:", id)
+    // console.log("file:", db['Todos'][0].id);
     for (var i = 0; i < db['Todos'].length; i++) {
-        console.log(db['Todos'][i]);
+        // console.log(db['Todos'][i]);
         if (db['Todos'][i].id === Number(id)) {
-            console.log("Now it in if");
+            // console.log("Now it in if");
             db['Todos'][i].title = title;
             fs_1.default.writeFileSync('db.json', JSON.stringify(db));
             res.json({ message: "Success update." });

@@ -11,14 +11,10 @@ interface Todo {
     desc:string
 }
 
-
-
 let Todos: Todo[] = [] // เราสร้างค่านี้ไว้เพื่อที่จะทำการ push ค่าเข้าไปด้านใน
 
 const app = express() // ไว้สำหรับสร้าง  app backend เป็น object
 app.use(bodyParser.json()) // เพิ่ม pugin ให้ body อยู่ในรูปแบบของ json 
-
-
 
 // การเขียน path จำเป็นต้องมีองค์ประกอบอยู่ 2 อย่าง ณ บริเวณ callback คือ req res ต้องเรียงตามรายละเอียดตามนี้
 // res ต้องดึง หรือเก็บเป็น json 
@@ -85,6 +81,7 @@ app.delete('/todos/:id', (req,res)=>{
     }
 })
 
+// update methods 
 app.put('/todos/:id',(req, res)=>{
     
     const {id} = req.params;
@@ -92,15 +89,14 @@ app.put('/todos/:id',(req, res)=>{
 
     const file = fs.readFileSync('db.json','utf-8');
     const db = JSON.parse(file);
-    // console.log(db['Todos'].length);
-    // console.log(db['Todos'][0].title);
-    console.log("id:", id)
-    console.log("file:", db['Todos'][0].id);
+
+    // console.log("id:", id)
+    // console.log("file:", db['Todos'][0].id);
     
     for(let i = 0; i < db['Todos'].length; i++){
-        console.log(db['Todos'][i]);
+        // console.log(db['Todos'][i]);
         if(db['Todos'][i].id === Number(id)){
-            console.log("Now it in if");
+            // console.log("Now it in if");
             db['Todos'][i].title = title;
             fs.writeFileSync('db.json', JSON.stringify(db))
             res.json({message: "Success update."});
@@ -109,8 +105,6 @@ app.put('/todos/:id',(req, res)=>{
             res.json({message: "Not found this id. 404"});
         }
     }
-
-
 })
 
 
@@ -141,8 +135,6 @@ app.get('/queryparam', (req, res) => {
         body,
     })
 })
-
-
 
 // จากนั้นการยิงออกไปต้องระบุ port พร้อมกับ callback ว่าจะให้วิ่งไปที่ไหน (จริงๆจะใส่หรือไม่ก็ได้เป็น option)
 app.listen(8000, ()=> console.log('serve is running.'))
